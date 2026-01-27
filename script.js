@@ -137,17 +137,34 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Handle touch interactions for mobile
-  window.addEventListener("touchmove", (e) => {
+  const handleTouch = (e) => {
     if(e.touches.length > 0) {
       mouse.x = e.touches[0].clientX;
       mouse.y = e.touches[0].clientY;
     }
-  }, { passive: true });
+  };
+
+  window.addEventListener("touchstart", handleTouch, { passive: true });
+  window.addEventListener("touchmove", handleTouch, { passive: true });
+  
+  window.addEventListener("touchend", () => {
+    mouse.x = -1000;
+    mouse.y = -1000;
+  });
 
   // Reset mouse when leaving window
   document.addEventListener("mouseleave", () => {
     mouse.x = -1000;
     mouse.y = -1000;
+  });
+
+  // Scroll listener for logo resizing
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 50) {
+      document.body.classList.add("scrolled");
+    } else {
+      document.body.classList.remove("scrolled");
+    }
   });
 
   // --- Lights Off Logic ---
@@ -157,6 +174,29 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.classList.toggle("lights-off-mode");
     });
   }
+
+  // --- Scroll Animation Logic ---
+  const sections = document.querySelectorAll("main section");
+  
+  const observerOptions = {
+    threshold: 0.15,
+    rootMargin: "0px 0px -50px 0px"
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+      } else {
+        entry.target.classList.remove("is-visible");
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(section => {
+    section.classList.add("fade-in-section");
+    observer.observe(section);
+  });
 
   // Start
   resize();

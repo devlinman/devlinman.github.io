@@ -54,17 +54,82 @@ body {
   font-weight: 700;
 }
 
-header {
+header#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 5rem 1rem 3rem;
+  padding: 2rem;
   transition: opacity 0.5s ease;
+  position: relative;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+}
+
+.hero-subtitle {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 3rem;
+  font-weight: 300;
+  letter-spacing: 2px;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.stylish-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.stylish-divider .line {
+  height: 2px;
+  flex: 1;
+  background: linear-gradient(90deg, transparent, var(--red2), transparent);
+  opacity: 0.7;
+}
+
+.stylish-divider .diamond {
+  width: 12px;
+  height: 12px;
+  background-color: var(--red);
+  transform: rotate(45deg);
+  box-shadow: 0 0 10px var(--red);
+}
+
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, visibility;
+}
+
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: none;
 }
 
 .header-logo {
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   margin-bottom: 1.5rem;
   filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.5));
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+body.scrolled .header-logo {
+  width: 128px;
+  height: 128px;
 }
 
 .logo {
@@ -72,6 +137,7 @@ header {
   font-weight: 800;
   color: var(--red);
   text-shadow: 0 0 35px rgba(255, 0, 0, 0.9);
+  margin-bottom: 1.5rem;
 }
 
 .github-link {
@@ -225,6 +291,34 @@ body.lights-off-mode #lights-toggle {
 body.lights-off-mode #lights-toggle:hover {
   opacity: 1;
   color: var(--text);
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--muted);
+  opacity: 0.5;
+  animation: bounce 2s infinite;
+  transition: opacity 0.3s ease;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+body.scrolled .scroll-hint {
+  opacity: 0;
+  pointer-events: none;
 }
 
 body.lights-off-mode header,
