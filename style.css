@@ -58,6 +58,13 @@ header {
   padding: 5rem 1rem 3rem;
 }
 
+.header-logo {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.5));
+}
+
 .logo {
   font-size: 3.8rem;
   font-weight: 800;
