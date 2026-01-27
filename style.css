@@ -37,6 +37,7 @@ body {
                                   rgba(190, 20, 255, 0.25),
                                   transparent 65%);
                   z-index: -2;
+  transition: opacity 0.5s ease;
 }
 
 #bg-canvas {
@@ -56,6 +57,7 @@ body {
 header {
   text-align: center;
   padding: 5rem 1rem 3rem;
+  transition: opacity 0.5s ease;
 }
 
 .header-logo {
@@ -88,6 +90,7 @@ main {
   max-width: 1000px;
   margin: auto;
   padding: 2rem;
+  transition: opacity 0.5s ease;
 }
 
 section {
@@ -162,7 +165,7 @@ h2 {
 .links {
   margin-top: auto;
   padding-top: 1.2rem;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   color: var(--red2);
 }
 
@@ -186,4 +189,46 @@ footer p {
   color: var(--muted);
   opacity: 0.5;
   font-size: 0.9rem;
+}
+
+#lights-toggle {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+  background: transparent;
+  border: none;
+  color: var(--red2);
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  padding: 8px;
+}
+
+#lights-toggle svg {
+  width: 32px;
+  height: 32px;
+  filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
+}
+
+#lights-toggle:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  color: var(--text);
+}
+
+body.lights-off-mode #lights-toggle {
+  color: var(--muted);
+  opacity: 0.3;
+}
+
+body.lights-off-mode #lights-toggle:hover {
+  opacity: 1;
+  color: var(--text);
+}
+
+body.lights-off-mode header,
+body.lights-off-mode main {
+  opacity: 0;
+  pointer-events: none;
 }

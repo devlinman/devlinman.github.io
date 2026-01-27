@@ -150,6 +150,14 @@ document.addEventListener("DOMContentLoaded", () => {
     mouse.y = -1000;
   });
 
+  // --- Lights Off Logic ---
+  const toggleBtn = document.getElementById("lights-toggle");
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      document.body.classList.toggle("lights-off-mode");
+    });
+  }
+
   // Start
   resize();
   animate();
