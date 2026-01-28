@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Configuration
   const isMobile = window.innerWidth < 800;
-  const particleCount = isMobile ? 300 : 1000; // density
+  const particleCount = isMobile ? 180 : 1000; 
   const colors = ["#270434", "#ffffff"]; // violet, White
   const mouse = { x: -1000, y: -1000 };
   const interactionRadius = 100;
@@ -81,7 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function resize() {
     width = window.innerWidth;
     height = window.innerHeight;
-    canvas.width = width;
+    // pixel ratio 1 for mobile
+    canvas.width = width; 
     canvas.height = height;
   }
 
@@ -253,7 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Logo Ripple Trigger ---
   const logo = document.querySelector(".header-logo");
   if (logo) {
-    logo.addEventListener("click", () => {
+    logo.addEventListener("pointerdown", (e) => {
       // Cycle Theme
       updateTheme();
 
