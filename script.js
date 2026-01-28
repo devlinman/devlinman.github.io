@@ -37,7 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let ripples = [];
 
   // Configuration
-  const particleCount = 1000; // density
+  const isMobile = window.innerWidth < 800;
+  const particleCount = isMobile ? 300 : 1000; // density
   const colors = ["#270434", "#ffffff"]; // violet, White
   const mouse = { x: -1000, y: -1000 };
   const interactionRadius = 100;
