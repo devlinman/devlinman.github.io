@@ -87,10 +87,14 @@ header#hero {
   margin-bottom: 1.5rem;
   /* Base Red Shadow */
   filter: drop-shadow(0 0 25px #ff0000);
-  transition: width 0.3s ease, height 0.3s ease, filter 0.3s ease;
+  transition: width 0.3s ease, height 0.3s ease;
   user-select: none;
   -webkit-user-drag: none;
   pointer-events: auto;
+}
+
+body.lights-off-mode .header-logo {
+  pointer-events: none;
 }
 
 body.theme-blue .header-logo {

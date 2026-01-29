@@ -112,49 +112,57 @@ document.addEventListener("DOMContentLoaded", () => {
       this.rippleLife = 0;
     }
 
-    update() {
+    update(time) {
       this.dx = 0;
       this.dy = 0;
       this.rippleLife *= 0.85;
 
+      // Mouse Interaction
       const dx = this.x - mouse.x;
       const dy = this.y - mouse.y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
+      const distSq = dx * dx + dy * dy;
 
-      if (distance < interactionRadius) {
+      if (distSq < 10000) { // 100 * 100
+        const distance = Math.sqrt(distSq);
         const forceDirectionX = dx / distance;
         const forceDirectionY = dy / distance;
-        const force = (interactionRadius - distance) / interactionRadius;
+        const force = (100 - distance) / 100;
         
-        const forceX = forceDirectionX * force * 0.5 ;
-        const forceY = forceDirectionY * force * 0.5 ;
-
-        this.vx += forceX;
-        this.vy += forceY;
+        this.vx += forceDirectionX * force * 0.5 ;
+        this.vy += forceDirectionY * force * 0.5 ;
       }
 
       // Ripple Interaction
+      const bandWidth = 100;
+      
       ripples.forEach(ripple => {
-        const dx = this.x - ripple.x;
-        const dy = this.y - ripple.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        const diff = distance - ripple.radius;
-        const bandWidth = 100; // Wider band
+        const rx = this.x - ripple.x;
+        const ry = this.y - ripple.y;
+        const rDistSq = rx * rx + ry * ry;
 
-        if (Math.abs(diff) < bandWidth) {
-           const forceDirectionX = dx / distance;
-           const forceDirectionY = dy / distance;
-           
-           const normalizedDist = diff / bandWidth;
-           const angle = normalizedDist * (Math.PI / 2);
-           const wave = Math.cos(angle);
+        const minR = ripple.radius - bandWidth;
+        const maxR = ripple.radius + bandWidth;
+        const minRSq = minR > 0 ? minR * minR : 0;
+        const maxRSq = maxR * maxR;
 
-           const displacement = wave * ripple.strength;
-           
-           this.dx += forceDirectionX * displacement;
-           this.dy += forceDirectionY * displacement;
-           this.rippleLife = 1.0;
+        if (rDistSq >= minRSq && rDistSq <= maxRSq) {
+           const distance = Math.sqrt(rDistSq);
+           const diff = distance - ripple.radius;
+
+           if (Math.abs(diff) < bandWidth) {
+              const forceDirectionX = rx / distance;
+              const forceDirectionY = ry / distance;
+              
+              const normalizedDist = diff / bandWidth;
+              const angle = normalizedDist * (Math.PI / 2);
+              const wave = Math.cos(angle);
+
+              const displacement = wave * ripple.strength;
+              
+              this.dx += forceDirectionX * displacement;
+              this.dy += forceDirectionY * displacement;
+              this.rippleLife = 1.0;
+           }
         }
       });
 
@@ -202,10 +210,9 @@ document.addEventListener("DOMContentLoaded", () => {
       
       ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
 
-      if (this.rippleLife > 0.01) {
+      if (this.rippleLife > 0.1) {
         ctx.shadowBlur = 15 * this.rippleLife;
         ctx.shadowColor = `rgba(${targetColor.r}, ${targetColor.g}, ${targetColor.b}, ${this.rippleLife})`;
-        // Make it stand out more by increasing alpha temporarily
         currentAlpha = Math.max(this.alpha, this.rippleLife * 0.8);
       } else {
         ctx.shadowBlur = 0;
@@ -242,8 +249,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
+    const time = Date.now() * 0.001;
+
     particles.forEach((p) => {
-      p.update();
+      p.update(time);
       p.draw();
     });
     requestAnimationFrame(animate);
@@ -274,7 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
         radius: 0,
         maxRadius: Math.max(width, height) * 1.5,
         strength: 50,
-        speed: 12
+        speed: 20
       });
     });
 
