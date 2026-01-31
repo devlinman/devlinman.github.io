@@ -1,286 +1,386 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="darkreader-lock" />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="darkreader-lock" />
 
-  <title>devlinman</title>
+        <title>devlinman</title>
 
-  <link rel="preload" href="style.css" as="style" />
-  <link rel="preload" href="favicon.svg" as="image" type="image/svg+xml" />
+        <link rel="preload" href="style.css" as="style" />
+        <link
+            rel="preload"
+            href="favicon.svg"
+            as="image"
+            type="image/svg+xml"
+        />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <link
-    rel="preload"
-    as="style"
-    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap"
-  />
+        <link
+            rel="preload"
+            as="style"
+            href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap"
+        />
 
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+        <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap"
-    rel="stylesheet"
-  />
+        <link
+            href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap"
+            rel="stylesheet"
+        />
 
-  <style>
-    :root {
-      --bg: #000;
-      --card: rgba(25, 0, 10, 0.88);
-      --red: #ff0000;
-      --red2: #ff4444;
-      --violet: #c112ff;
-      --text: #ffffff;
-      --muted: #dddddd;
-      --radius: 16px;
-      --glow-1: rgba(255, 0, 0, 0.35);
-      --glow-2: rgba(190, 20, 255, 0.25);
-    }
-    body.theme-blue {
-      --red: #0088ff;
-      --red2: #44aaff;
-      --violet: #00ffff;
-      --card: rgba(0, 10, 25, 0.88);
-      --glow-1: rgba(0, 136, 255, 0.35);
-      --glow-2: rgba(0, 255, 255, 0.25);
-    }
-    body.theme-green {
-      --red: #00ff00;
-      --red2: #44ff44;
-      --violet: #ccff00;
-      --card: rgba(0, 25, 10, 0.88);
-      --glow-1: rgba(0, 255, 0, 0.35);
-      --glow-2: rgba(204, 255, 0, 0.25);
-    }
-    body.theme-gold {
-      --red: #ffaa00;
-      --red2: #ffcc44;
-      --violet: #ff4400;
-      --card: rgba(25, 15, 0, 0.88);
-      --glow-1: rgba(255, 170, 0, 0.35);
-      --glow-2: rgba(255, 68, 0, 0.25);
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "JetBrains Mono", monospace; }
-    body { background: var(--bg); color: var(--text); font-size: 18px; overflow-x: hidden; }
-    #loading-screen {
-      position: fixed; inset: 0; background-color: var(--bg); z-index: 9999;
-      display: flex; justify-content: center; align-items: center;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
-    }
-    #loading-screen.hidden { opacity: 0; visibility: hidden; }
-    .spinner {
-      width: 40px; height: 40px; border: 3px solid rgba(255, 255, 255, 0.1);
-      border-radius: 50%; border-top-color: var(--red);
-      animation: spin 1s ease-in-out infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .bg-glow {
-      position: fixed; inset: 0;
-      background: radial-gradient(circle at top left, var(--glow-1), transparent 60%),
-                  radial-gradient(circle at bottom right, var(--glow-2), transparent 65%);
-      z-index: -2; transition: opacity 0.5s ease;
-    }
-  </style>
+        <style>
+            :root {
+                --bg: #000;
+                --card: rgba(25, 0, 10, 0.88);
+                --red: #ff0000;
+                --red2: #ff4444;
+                --violet: #c112ff;
+                --text: #ffffff;
+                --muted: #dddddd;
+                --radius: 16px;
+                --glow-1: rgba(255, 0, 0, 0.35);
+                --glow-2: rgba(190, 20, 255, 0.25);
+            }
+            body.theme-blue {
+                --red: #0088ff;
+                --red2: #44aaff;
+                --violet: #00ffff;
+                --card: rgba(0, 10, 25, 0.88);
+                --glow-1: rgba(0, 136, 255, 0.35);
+                --glow-2: rgba(0, 255, 255, 0.25);
+            }
+            body.theme-green {
+                --red: #00ff00;
+                --red2: #44ff44;
+                --violet: #ccff00;
+                --card: rgba(0, 25, 10, 0.88);
+                --glow-1: rgba(0, 255, 0, 0.35);
+                --glow-2: rgba(204, 255, 0, 0.25);
+            }
+            body.theme-gold {
+                --red: #ffaa00;
+                --red2: #ffcc44;
+                --violet: #ff4400;
+                --card: rgba(25, 15, 0, 0.88);
+                --glow-1: rgba(255, 170, 0, 0.35);
+                --glow-2: rgba(255, 68, 0, 0.25);
+            }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "JetBrains Mono", monospace;
+            }
+            body {
+                background: var(--bg);
+                color: var(--text);
+                font-size: 18px;
+                overflow-x: hidden;
+            }
+            #loading-screen {
+                position: fixed;
+                inset: 0;
+                background-color: var(--bg);
+                z-index: 9999;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition:
+                    opacity 0.5s ease,
+                    visibility 0.5s ease;
+            }
+            #loading-screen.hidden {
+                opacity: 0;
+                visibility: hidden;
+            }
+            .spinner {
+                width: 40px;
+                height: 40px;
+                border: 3px solid rgba(255, 255, 255, 0.1);
+                border-radius: 50%;
+                border-top-color: var(--red);
+                animation: spin 1s ease-in-out infinite;
+            }
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+            .bg-glow {
+                position: fixed;
+                inset: 0;
+                background:
+                    radial-gradient(
+                        circle at top left,
+                        var(--glow-1),
+                        transparent 60%
+                    ),
+                    radial-gradient(
+                        circle at bottom right,
+                        var(--glow-2),
+                        transparent 65%
+                    );
+                z-index: -2;
+                transition: opacity 0.5s ease;
+            }
+        </style>
 
-  <link rel="stylesheet" href="style.css" />
-</head>
+        <link rel="stylesheet" href="style.css" />
+    </head>
 
-
-<body>
-
-  <div id="loading-screen">
-    <div class="spinner"></div>
-  </div>
-
-  <div class="bg-glow"></div>
-  <canvas id="bg-canvas"></canvas>
-
-  <header id="hero">
-    <div class="hero-content">
-      <img src="favicon.svg" alt="Logo" class="header-logo">
-      <h1 class="logo">devlinman</h1>
-      
-      <p class="hero-subtitle">Welcome to my domain...</p>
-
-      <div class="stylish-divider">
-        <span class="line"></span>
-        <span class="diamond"></span>
-        <span class="line"></span>
-      </div>
-
-      <a class="github-link"
-         href="https://github.com/devlinman"
-         target="_blank"
-         rel="noopener noreferrer">
-          GitHub: github.com/devlinman
-      </a>
-
-      <div class="scroll-hint">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
-        </svg>
-      </div>
-    </div>
-  </header>
-
-  <main>
-
-    <section class="about">
-      <h2>About</h2>
-
-      <p class="bold">
-        Systems programmer passionate about Linux internals, performance-driven software, and building tools that feel fast, minimal, and powerful.
-      </p>
-
-      <p class="bold"><br>
-        Yours truly - chaotic, futuristic, and a little devilish.
-      </p>
-    </section>
-
-    <section class="projects">
-      <h2>Projects</h2>
-
-      <div class="grid">
-
-        <div class="card"
-             data-href="https://github.com/devlinman/Procreate-thumbnailer">
-
-          <h3>Procreate Thumbnailer</h3>
-
-          <div class="badges">
-            <img class="icon rust-icon"
-              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg"
-              alt="Rust" />
-          </div>
-
-          <p>
-            A Thumbnail generator for Procreate files, made with Rust.
-          </p>
-          <p class="small"><br>
-             You're welcome Artists~!</p>
-          <p class="small"><br>
-                Thumbnails on Linux for projects made in Procreate for iPad.
-          </p>
-
-          <div class="links">
-            <a href="https://github.com/devlinman/Procreate-thumbnailer"
-               target="_blank"
-               rel="noopener noreferrer">
-              GitHub
-            </a>
-            <span>•</span>
-            <a href="https://aur.archlinux.org/packages/procreate-thumbnailer-git"
-               target="_blank"
-               rel="noopener noreferrer">
-              AUR
-            </a>
-          </div>
+    <body>
+        <div id="loading-screen">
+            <div class="spinner"></div>
         </div>
 
-        <div class="card"
-             data-href="https://github.com/devlinman/whatsit">
+        <div class="bg-glow"></div>
+        <canvas id="bg-canvas"></canvas>
 
-          <h3>whatsit</h3>
+        <header id="hero">
+            <div class="hero-content">
+                <img src="favicon.svg" alt="Logo" class="header-logo" />
+                <h1 class="logo">devlinman</h1>
 
-          <div class="badges">
-            <img class="icon"
-              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-plain.svg"
-              alt="C++" />
-            <img class="icon"
-              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/qt/qt-original.svg"
-              alt="Qt" />
-          </div>
+                <p class="hero-subtitle">Welcome to my domain...</p>
 
-          <p>
-            A fast and lightweight WhatsApp client built with C++ and Qt6.
-          </p>
-          <p class="small"><br>
-            Made out of frustration.</p>
-          <p class="small"><br>
-            With Features like Memory Kill Switch and Customizable App and Tray icons.
-          </p>
+                <div class="stylish-divider">
+                    <span class="line"></span>
+                    <span class="diamond"></span>
+                    <span class="line"></span>
+                </div>
 
-          <div class="links">
-            <a href="https://github.com/devlinman/whatsit"
-               target="_blank"
-               rel="noopener noreferrer">
-              GitHub
-            </a>
-            <span>•</span>
-            <a href="https://aur.archlinux.org/packages/whatsit-git"
-               target="_blank"
-               rel="noopener noreferrer">
-              AUR
-            </a>
-          </div>
-        </div>
+                <a
+                    class="github-link"
+                    href="https://github.com/devlinman"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    GitHub: github.com/devlinman
+                </a>
 
-        <div class="card"
-             data-href="https://github.com/devlinman/reOrg">
+                <div class="scroll-hint">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+                    </svg>
+                </div>
+            </div>
+        </header>
 
-          <h3>reOrg</h3>
+        <main>
+            <section class="about">
+                <h2>About</h2>
 
-          <div class="badges">
-            <img class="icon bash-icon"
-              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-plain.svg"
-              alt="Shell" />
-            <img class="icon emacs-icon"
-              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/emacs/emacs-original.svg"
-              alt="Emacs" />
-          </div>
+                <p class="bold">
+                    Systems programmer passionate about Linux internals,
+                    performance-driven software, and building tools that feel
+                    fast, minimal, and powerful.
+                </p>
 
-          <p>
-            Arch Linux customization using Org tangling + automation scripts.
-          </p>
+                <p class="bold">
+                    <br />
+                    Yours truly - chaotic, futuristic, and a little devilish.
+                </p>
+            </section>
 
-          <p class="small"><br>
-            Doom Emacs powered.</p>
-          <p class="small"><br>
-            Includes noweb + Emacs-Lisp helpers for Arch Linux setup automation.
-          </p>
+            <section class="projects">
+                <h2>Projects</h2>
 
-          <div class="links">
-            <a href="https://github.com/devlinman/reOrg"
-               target="_blank"
-               rel="noopener noreferrer">
-              GitHub
-            </a>
-          </div>
-        </div>
+                <div class="grid">
+                    <div
+                        class="card"
+                        data-href="https://github.com/devlinman/Procreate-thumbnailer"
+                    >
+                        <h3>Procreate Thumbnailer</h3>
 
-        <div class="card"
-             data-href="https://github.com/devlinman/REN.sh">
+                        <div class="badges">
+                            <img
+                                class="icon rust-icon"
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg"
+                                alt="Rust"
+                            />
+                        </div>
 
-          <h3>REN.sh</h3>
+                        <p>
+                            A Thumbnail generator for Procreate files, made with
+                            Rust.
+                        </p>
+                        <p class="small">
+                            <br />
+                            You're welcome Artists~!
+                        </p>
+                        <p class="small">
+                            <br />
+                            Thumbnails on Linux for projects made in Procreate
+                            for iPad.
+                        </p>
 
-          <div class="badges">
-            <img class="icon bash-icon"
-              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-plain.svg"
-              alt="Bash" />
-          </div>
+                        <div class="links">
+                            <a
+                                href="https://github.com/devlinman/Procreate-thumbnailer"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                GitHub
+                            </a>
+                            <span>•</span>
+                            <a
+                                href="https://aur.archlinux.org/packages/procreate-thumbnailer-git"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                AUR
+                            </a>
+                        </div>
+                    </div>
 
-          <p>
-            Utility that fixes wrong file extensions by checking MIME type.
-          </p>
+                    <div
+                        class="card"
+                        data-href="https://github.com/devlinman/whatsit"
+                    >
+                        <h3>whatsit</h3>
 
-          <p class="small"><br>
-            Supports mp4, mov, pdf, png, jpeg, webp, etc. </p>
-          <p class="small"><br>
-            Rust rewrite planned.
-          </p>
+                        <div class="badges">
+                            <img
+                                class="icon"
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-plain.svg"
+                                alt="C++"
+                            />
+                            <img
+                                class="icon"
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/qt/qt-original.svg"
+                                alt="Qt"
+                            />
+                        </div>
 
-          <div class="links">
-            <a href="https://github.com/devlinman/REN.sh"
-               target="_blank"
-               rel="noopener noreferrer">
-              GitHub
-            </a>
-          </div>
-        </div>
+                        <p>
+                            A fast and lightweight WhatsApp client built with
+                            C++ and Qt6.
+                        </p>
+                        <p class="small">
+                            <br />
+                            Made out of frustration.
+                        </p>
+                        <p class="small">
+                            <br />
+                            With Features like Memory Kill Switch and
+                            Customizable App and Tray icons.
+                        </p>
 
+                        <div class="links">
+                            <a
+                                href="https://github.com/devlinman/whatsit"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                GitHub
+                            </a>
+                            <span>•</span>
+                            <a
+                                href="https://aur.archlinux.org/packages/whatsit-git"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                AUR
+                            </a>
+                        </div>
+                    </div>
+
+                    <div
+                        class="card"
+                        data-href="https://github.com/devlinman/reOrg"
+                    >
+                        <h3>reOrg</h3>
+
+                        <div class="badges">
+                            <img
+                                class="icon bash-icon"
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-plain.svg"
+                                alt="Shell"
+                            />
+                            <img
+                                class="icon emacs-icon"
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/emacs/emacs-original.svg"
+                                alt="Emacs"
+                            />
+                        </div>
+
+                        <p>
+                            Arch Linux customization using Org tangling +
+                            automation scripts.
+                        </p>
+
+                        <p class="small">
+                            <br />
+                            Doom Emacs powered.
+                        </p>
+                        <p class="small">
+                            <br />
+                            Includes noweb + Emacs-Lisp helpers for Arch Linux
+                            setup automation.
+                        </p>
+
+                        <div class="links">
+                            <a
+                                href="https://github.com/devlinman/reOrg"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                GitHub
+                            </a>
+                        </div>
+                    </div>
+
+                    <div
+                        class="card"
+                        data-href="https://github.com/devlinman/REN.sh"
+                    >
+                        <h3>REN.sh</h3>
+
+                        <div class="badges">
+                            <img
+                                class="icon bash-icon"
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-plain.svg"
+                                alt="Bash"
+                            />
+                        </div>
+
+                        <p>
+                            Utility that fixes wrong file extensions by checking
+                            MIME type.
+                        </p>
+
+                        <p class="small">
+                            <br />
+                            Supports mp4, mov, pdf, png, jpeg, webp, etc.
+                        </p>
+                        <p class="small">
+                            <br />
+                            Rust rewrite planned.
+                        </p>
+
+                        <div class="links">
+                            <a
+                                href="https://github.com/devlinman/REN.sh"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                GitHub
+                            </a>
+                        </div>
+                    </div>
         <div class="card"
              data-href="https://github.com/devlinman/QR-Magic">
 
@@ -346,54 +446,83 @@
           </div>
         </div>
 
-      </div>
-    </section>
+                </div>
+            </section>
 
-    <section class="interests">
-      <h2>Interests</h2>
+            <section class="interests">
+                <h2>Interests</h2>
 
-      <div class="grid">
-        <div class="card interest-card">
-          <div class="interest-icon-wrapper">
-             <img class="interest-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/archlinux/archlinux-original.svg" alt="Arch Linux">
-          </div>
-          <h3>Arch Linux</h3>
-          <p class="small">I use Arch, btw.</p>
-        </div>
+                <div class="grid">
+                    <div class="card interest-card">
+                        <div class="interest-icon-wrapper">
+                            <img
+                                class="interest-icon"
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/archlinux/archlinux-original.svg"
+                                alt="Arch Linux"
+                            />
+                        </div>
+                        <h3>Arch Linux</h3>
+                        <p class="small">I use Arch, btw.</p>
+                    </div>
 
-        <div class="card interest-card">
-          <div class="interest-icon-wrapper">
-            <img class="interest-icon emacs-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/emacs/emacs-original.svg" alt="Doom Emacs">
-          </div>
-          <h3>Doom Emacs</h3>
-          <p class="small">Vim keybindings in an OS.</p>
-        </div>
+                    <div class="card interest-card">
+                        <div class="interest-icon-wrapper">
+                            <img
+                                class="interest-icon emacs-icon"
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/emacs/emacs-original.svg"
+                                alt="Doom Emacs"
+                            />
+                        </div>
+                        <h3>Doom Emacs</h3>
+                        <p class="small">Vim keybindings in an OS.</p>
+                    </div>
 
-        <div class="card interest-card">
-          <div class="interest-icon-wrapper">
-            <!-- Death Star Icon -->
-             <svg class="interest-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-               <circle cx="12" cy="12" r="10" />
-               <path d="M2.1 12h19.8" />
-               <circle cx="16" cy="8" r="3" />
-             </svg>
-          </div>
-          <h3>Star Wars</h3>
-          <p class="small">May the Force be with you.</p>
-        </div>
+                    <div class="card interest-card">
+                        <div class="interest-icon-wrapper">
+                            <!-- Death Star Icon -->
+                            <svg
+                                class="interest-icon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M2.1 12h19.8" />
+                                <circle cx="16" cy="8" r="3" />
+                            </svg>
+                        </div>
+                        <h3>Star Wars</h3>
+                        <p class="small">May the Force be with you.</p>
+                    </div>
 
-        <div class="card interest-card">
-          <div class="interest-icon-wrapper">
-             <svg class="interest-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-               <circle cx="12" cy="12" r="7" />
-               <ellipse cx="12" cy="12" rx="11" ry="4" transform="rotate(-20 12 12)" />
-             </svg>
-
-          </div>
-          <h3>Sci-Fi Movies</h3>
-          <p class="small">Interstellar, TENET, Inception...</p>
-        </div>
-
+                    <div class="card interest-card">
+                        <div class="interest-icon-wrapper">
+                            <svg
+                                class="interest-icon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <circle cx="12" cy="12" r="7" />
+                                <ellipse
+                                    cx="12"
+                                    cy="12"
+                                    rx="11"
+                                    ry="4"
+                                    transform="rotate(-20 12 12)"
+                                />
+                            </svg>
+                        </div>
+                        <h3>Sci-Fi Movies</h3>
+                        <p class="small">Interstellar, TENET, Inception...</p>
+                    </div>
+          
         <div class="card interest-card">
           <div class="interest-icon-wrapper">
             <svg class="interest-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -425,22 +554,31 @@
 
 
       </div>
-    </section>
+            </section>
 
-    <footer>
-      <p>devlinman • Systems, Low-level, Chaos.</p>
-    </footer>
+            <footer>
+                <p>devlinman • Systems, Low-level, Chaos.</p>
+            </footer>
+        </main>
 
-  </main>
+        <button id="lights-toggle" aria-label="Toggle Lights">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="M9 18h6" />
+                <path d="M10 22h4" />
+                <path
+                    d="M12 2a7 7 0 0 0-7 7c0 2 2 3 2 4.5V15a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1.5c0-1.5 2-2.5 2-4.5a7 7 0 0 0-7-7z"
+                />
+            </svg>
+        </button>
 
-  <button id="lights-toggle" aria-label="Toggle Lights">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M9 18h6" />
-      <path d="M10 22h4" />
-      <path d="M12 2a7 7 0 0 0-7 7c0 2 2 3 2 4.5V15a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1.5c0-1.5 2-2.5 2-4.5a7 7 0 0 0-7-7z" />
-    </svg>
-  </button>
-
-  <script src="script.js"></script>
-</body>
+        <script src="script.js"></script>
+    </body>
 </html>
