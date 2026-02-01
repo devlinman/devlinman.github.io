@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   // --- Loading Screen Logic ---
   const loadingScreen = document.getElementById("loading-screen");
-  
+
   // Ensure all resources are loaded
   window.addEventListener("load", () => {
     if (loadingScreen) {
@@ -38,13 +38,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Configuration
   const isMobile = window.innerWidth < 800;
-  const particleCount = isMobile ? 180 : 1000; 
+  const particleCount = isMobile ? 180 : 1000;
   const colors = ["#270434", "#ffffff"]; // violet, White
   const mouse = { x: -1000, y: -1000 };
-  const interactionRadius = 100;
+  // const interactionRadius = 100;
 
   // Themes
-  const themes = ['', 'theme-blue', 'theme-green', 'theme-gold'];
+  const themes = ["", "theme-blue", "theme-green", "theme-gold"];
   let currentThemeIndex = 0;
   let targetColor = { r: 255, g: 0, b: 0 }; // Default Red
 
@@ -52,17 +52,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
     hex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b);
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-      r: parseInt(result[1], 16),
-      g: parseInt(result[2], 16),
-      b: parseInt(result[3], 16)
-    } : { r: 255, g: 0, b: 0 };
+    return result
+      ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16),
+        }
+      : { r: 255, g: 0, b: 0 };
   }
 
   function updateTheme() {
     currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-    
-    themes.forEach(t => {
+
+    themes.forEach((t) => {
       if (t) document.body.classList.remove(t);
     });
 
@@ -72,9 +74,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     requestAnimationFrame(() => {
-       const computedStyle = getComputedStyle(document.body);
-       const redVar = computedStyle.getPropertyValue('--red').trim();
-       targetColor = hexToRgb(redVar);
+      const computedStyle = getComputedStyle(document.body);
+      const redVar = computedStyle.getPropertyValue("--red").trim();
+      targetColor = hexToRgb(redVar);
     });
   }
 
@@ -82,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
     width = window.innerWidth;
     height = window.innerHeight;
     // pixel ratio 1 for mobile
-    canvas.width = width; 
+    canvas.width = width;
     canvas.height = height;
   }
 
@@ -103,16 +105,16 @@ document.addEventListener("DOMContentLoaded", () => {
       this.rgb = {
         r: parseInt(randomColor.slice(1, 3), 16),
         g: parseInt(randomColor.slice(3, 5), 16),
-        b: parseInt(randomColor.slice(5, 7), 16)
+        b: parseInt(randomColor.slice(5, 7), 16),
       };
       this.alpha = Math.random() * 0.3 + 0.1; // Opacity 0.1 to 0.4
-      this.drift = Math.random() ;
+      this.drift = Math.random();
       this.dx = 0;
       this.dy = 0;
       this.rippleLife = 0;
     }
 
-    update(time) {
+    update() {
       this.dx = 0;
       this.dy = 0;
       this.rippleLife *= 0.85;
@@ -122,20 +124,21 @@ document.addEventListener("DOMContentLoaded", () => {
       const dy = this.y - mouse.y;
       const distSq = dx * dx + dy * dy;
 
-      if (distSq < 10000) { // 100 * 100
+      if (distSq < 10000) {
+        // 100 * 100
         const distance = Math.sqrt(distSq);
         const forceDirectionX = dx / distance;
         const forceDirectionY = dy / distance;
         const force = (100 - distance) / 100;
-        
-        this.vx += forceDirectionX * force * 0.5 ;
-        this.vy += forceDirectionY * force * 0.5 ;
+
+        this.vx += forceDirectionX * force * 0.5;
+        this.vy += forceDirectionY * force * 0.5;
       }
 
       // Ripple Interaction
       const bandWidth = 100;
-      
-      ripples.forEach(ripple => {
+
+      ripples.forEach((ripple) => {
         const rx = this.x - ripple.x;
         const ry = this.y - ripple.y;
         const rDistSq = rx * rx + ry * ry;
@@ -146,23 +149,23 @@ document.addEventListener("DOMContentLoaded", () => {
         const maxRSq = maxR * maxR;
 
         if (rDistSq >= minRSq && rDistSq <= maxRSq) {
-           const distance = Math.sqrt(rDistSq);
-           const diff = distance - ripple.radius;
+          const distance = Math.sqrt(rDistSq);
+          const diff = distance - ripple.radius;
 
-           if (Math.abs(diff) < bandWidth) {
-              const forceDirectionX = rx / distance;
-              const forceDirectionY = ry / distance;
-              
-              const normalizedDist = diff / bandWidth;
-              const angle = normalizedDist * (Math.PI / 2);
-              const wave = Math.cos(angle);
+          if (Math.abs(diff) < bandWidth) {
+            const forceDirectionX = rx / distance;
+            const forceDirectionY = ry / distance;
 
-              const displacement = wave * ripple.strength;
-              
-              this.dx += forceDirectionX * displacement;
-              this.dy += forceDirectionY * displacement;
-              this.rippleLife = 1.0;
-           }
+            const normalizedDist = diff / bandWidth;
+            const angle = normalizedDist * (Math.PI / 2);
+            const wave = Math.cos(angle);
+
+            const displacement = wave * ripple.strength;
+
+            this.dx += forceDirectionX * displacement;
+            this.dy += forceDirectionY * displacement;
+            this.rippleLife = 1.0;
+          }
         }
       });
 
@@ -171,13 +174,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const base = Math.sin(t * 0.7 + this.drift) * 0.015;
       const noise = Math.cos(t * 1.3 + this.drift * 2) * 0.01;
-      
-      const gustTrigger = Math.sin(t * 0.4 + this.drift * 5); 
-      const gust = (gustTrigger ** 9) * 0.04;
+
+      const gustTrigger = Math.sin(t * 0.4 + this.drift * 5);
+      const gust = gustTrigger ** 9 * 0.04;
 
       this.vx += base + noise + gust;
-// // // // // // // // // //
-
+      // // // // // // // // // //
 
       this.x += this.vx;
       this.y += this.vy;
@@ -198,16 +200,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     draw() {
       let currentAlpha = this.alpha;
-      
+
       // Interpolate Color: Original -> Target (Theme Color)
       // rippleLife is 1.0 (Target) -> 0.0 (Original)
       const factor = Math.min(1, Math.max(0, this.rippleLife));
-      
+
       // Target Color from global state
       const r = Math.round(this.rgb.r + (targetColor.r - this.rgb.r) * factor);
       const g = Math.round(this.rgb.g + (targetColor.g - this.rgb.g) * factor);
       const b = Math.round(this.rgb.b + (targetColor.b - this.rgb.b) * factor);
-      
+
       ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
 
       if (this.rippleLife > 0.1) {
@@ -224,7 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Draw at position + visual offset
       ctx.arc(this.x + this.dx, this.y + this.dy, this.size, 0, Math.PI * 2);
       ctx.fill();
-      
+
       ctx.shadowBlur = 0;
       ctx.globalAlpha = 1;
     }
@@ -239,13 +241,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function animate() {
     ctx.clearRect(0, 0, width, height);
-    
+
     // Update Ripples
     for (let i = ripples.length - 1; i >= 0; i--) {
       const ripple = ripples[i];
       ripple.radius += ripple.speed;
       if (ripple.radius > ripple.maxRadius) {
-         ripples.splice(i, 1);
+        ripples.splice(i, 1);
       }
     }
 
@@ -259,11 +261,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   window.addEventListener("resize", resize);
-  
+
   // --- Logo Ripple Trigger ---
   const logo = document.querySelector(".header-logo");
   if (logo) {
-    logo.addEventListener("pointerdown", (e) => {
+    logo.addEventListener("pointerdown", () => {
       // Cycle Theme
       updateTheme();
 
@@ -275,7 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const rect = logo.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
-      
+
       // // // Wave speed, strength
       ripples.push({
         x: centerX,
@@ -283,14 +285,14 @@ document.addEventListener("DOMContentLoaded", () => {
         radius: 0,
         maxRadius: Math.max(width, height) * 1.5,
         strength: 50,
-        speed: 20
+        speed: 20,
       });
     });
 
     logo.addEventListener("dragstart", (e) => e.preventDefault());
     logo.addEventListener("contextmenu", (e) => e.preventDefault());
   }
-  
+
   window.addEventListener("mousemove", (e) => {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
@@ -298,7 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Touch interactions for mobile ---
   const handleTouch = (e) => {
-    if(e.touches.length > 0) {
+    if (e.touches.length > 0) {
       mouse.x = e.touches[0].clientX;
       mouse.y = e.touches[0].clientY;
     }
@@ -306,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("touchstart", handleTouch, { passive: true });
   window.addEventListener("touchmove", handleTouch, { passive: true });
-  
+
   window.addEventListener("touchend", () => {
     mouse.x = -1000;
     mouse.y = -1000;
@@ -344,14 +346,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Scroll Animation Logic ---
   const sections = document.querySelectorAll("main section:not(.about)");
-  
+
   const observerOptions = {
     threshold: 0.15,
-    rootMargin: "0px 0px -50px 0px"
+    rootMargin: "0px 0px -50px 0px",
   };
 
-  const observer = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("is-visible");
       } else {
@@ -360,7 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }, observerOptions);
 
-  sections.forEach(section => {
+  sections.forEach((section) => {
     section.classList.add("fade-in-section");
     observer.observe(section);
   });

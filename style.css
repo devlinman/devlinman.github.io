@@ -72,7 +72,9 @@ header#hero {
 .fade-in-section {
   opacity: 0;
   transform: translateY(50px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transition:
+    opacity 0.8s ease-out,
+    transform 0.8s ease-out;
   will-change: opacity, visibility;
 }
 
@@ -87,7 +89,9 @@ header#hero {
   margin-bottom: 1.5rem;
   /* Base Red Shadow */
   filter: drop-shadow(0 0 25px #ff0000);
-  transition: width 0.3s ease, height 0.3s ease;
+  transition:
+    width 0.3s ease,
+    height 0.3s ease;
   user-select: none;
   -webkit-user-drag: none;
   pointer-events: auto;
@@ -114,9 +118,15 @@ body.theme-gold .header-logo {
 }
 
 @keyframes pop {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 body.scrolled .header-logo {
@@ -130,7 +140,9 @@ body.scrolled .header-logo {
   color: var(--red);
   text-shadow: 0 0 35px var(--red);
   margin-bottom: 1.5rem;
-  transition: text-shadow 0.3s ease, color 0.3s ease;
+  transition:
+    text-shadow 0.3s ease,
+    color 0.3s ease;
 }
 
 .github-link {
@@ -185,12 +197,16 @@ h2 {
   justify-content: center;
   margin-bottom: 1rem;
   box-shadow: 0 0 15px var(--red);
-  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .card.interest-card:hover .interest-icon-wrapper {
   transform: scale(1.1) rotate(5deg);
-  background: rgba(255, 0, 0, 0.15);
+  /*   background: rgba(255, 0, 0, 0.15); */
+  background: var(--card);
 }
 
 .interest-icon {
@@ -207,7 +223,10 @@ h2 {
   border: 1px solid var(--red);
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
 
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border 0.3s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border 0.3s ease;
 
   display: flex;
   flex-direction: column;
@@ -295,14 +314,17 @@ footer p {
   color: var(--red2);
   cursor: pointer;
   opacity: 0.6;
-  transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    color 0.2s ease;
   padding: 8px;
 }
 
 #lights-toggle svg {
   width: 32px;
   height: 32px;
-  filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
 }
 
 #lights-toggle:hover {
@@ -343,7 +365,11 @@ body.past-hero #lights-toggle:hover {
 }
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateX(-50%) translateY(0);
   }
   40% {
@@ -369,7 +395,7 @@ body.lights-off-mode main {
   html {
     scroll-behavior: auto;
   }
-  
+
   * {
     transition-timing-function: linear !important;
     animation-timing-function: linear !important;
